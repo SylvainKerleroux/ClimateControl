@@ -1,6 +1,6 @@
 import time
 
-class API_Loop():
+class API():
     
     API_KEY = "2f51ca9ab60128f4c2c3c8c6bc2be464"
     LOCATION = "Kingston, JM"
@@ -13,9 +13,12 @@ class API_Loop():
         observation = self.owm.weather_at_place(self.LOCATION)
         while True:
             current = observation.get_weather()
-            print(current.get_temperature(unit))
+            now = time.asctime(time.localtime(time.time()))
+            dic = {self.LOCATION : [now, current.get_temperature(unit)['temp'], current.get_humidity()]}
+            yield dic
             time.sleep(interval)
 
 if __name__ == "__main__":
-    api = API_Loop()
-    api.run(10, 'fahrenheit')
+    api = API()
+    for output in api.run(10, 'fahrenheit'):
+        print(output)
