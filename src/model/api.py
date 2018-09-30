@@ -27,7 +27,7 @@ class API():
                                                                time=now,
                                                                temp=current.get_temperature(unit)['temp'],
                                                                humid=current.get_humidity())
-            logger.info(res)
+            logger.warning(res)
             time.sleep(interval)
 
 
